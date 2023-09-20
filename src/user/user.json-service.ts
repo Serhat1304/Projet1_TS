@@ -3,9 +3,10 @@ import { User } from './user';
 import { UserService } from './user.service';
 
 export class UserJSONService implements UserService {
+    
 
     add(username: string): User {
-        const buffer = readFileSync("./src/user/user.json")
+        const buffer = readFileSync("src/user/user.json")
         const users = JSON.parse(buffer.toString()) as User[];
 
         let maxId = 0;
@@ -15,13 +16,13 @@ export class UserJSONService implements UserService {
             }
         }
 
-        const newUser = new User(
-            maxId + 1,
+        const newUser: User ={
+            id : maxId + 1,
             username,
-        );
+        };
 
         users.push(newUser);
-        writeFileSync("./src/user/user.json", JSON.stringify(users));
+        writeFileSync("src/user/user.json", JSON.stringify(users));
 
         return newUser;
     }
@@ -35,4 +36,4 @@ export class UserJSONService implements UserService {
 
         return existingUser || null;
     }
-}
+}   
